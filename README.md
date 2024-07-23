@@ -27,6 +27,12 @@
 	curl http://localhost:8080/api/producers/award-interval
 ```
 
+## CSV File to import
+
+```
+	path: src/main/resources/movielist.csv
+```
+
 ## H2 Console
 
 - URL = [http://localhost:8080/api/h2-console](http://localhost:8080/api/h2-console)
