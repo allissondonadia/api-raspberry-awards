@@ -40,11 +40,9 @@ public class StudiosService {
     public Studio findOrCreateStudio(String name) {
         Studio studio = studiosRepository.findByName(name);
         if(studio != null) {
-            // System.out.println("Studio was found: " + studio);
             return studio;
         }
         studio = studiosRepository.save(new Studio(name));
-        // System.out.println("Creating studio: " + studio);
         return studio;
     }
 }

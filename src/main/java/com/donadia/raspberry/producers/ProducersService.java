@@ -75,9 +75,7 @@ public class ProducersService {
                 years.sort(null);
                 log.info("producerAwards: " + producer + " - " + years);
                 for(int i = 0; i < years.size() - 1; i++) {
-                    for(int j = i + 1; j < years.size(); j++) {
-                        producerAwardsList.add(new ProducerAward(producer, years.get(j) - years.get(i), years.get(i), years.get(j)));
-                    }
+                    producerAwardsList.add(new ProducerAward(producer, years.get(i+1) - years.get(i), years.get(i), years.get(i+1)));
                 }
             }
         });
