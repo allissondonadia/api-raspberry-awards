@@ -13,11 +13,10 @@ import com.donadia.raspberry.producers.Responses.Award;
 import com.donadia.raspberry.producers.Responses.AwardInterval;
 import com.donadia.raspberry.producers.Responses.ProducerAward;
 
-public class ProducersControllerTest {
+public class ProducersServiceTest {
 
     private ProducersRepository producersRepository;
     private ProducersService producersService;
-    private ProducersController producersController;
 
     private List<Award> awards = new ArrayList<>();
     ProducerAward joelSilver = new ProducerAward("Joel Silver", 1, 1990, 1991);
@@ -27,7 +26,6 @@ public class ProducersControllerTest {
     public void setup() {
         producersRepository = mock(ProducersRepository.class);
         producersService = new ProducersService(producersRepository);
-        producersController = new ProducersController(producersService);
 
         awards.clear();
         awards.add(new Award("Producer 1", 2008));
@@ -42,7 +40,7 @@ public class ProducersControllerTest {
 
         when(producersRepository.getAwards()).thenReturn(awards);
 
-        AwardInterval actualInterval = producersController.awardInterval();
+        AwardInterval actualInterval = producersService.getAwardInterval();
 
         assertEquals(1, actualInterval.getMin().size());
         assertEquals(1, actualInterval.getMax().size());
@@ -55,7 +53,7 @@ public class ProducersControllerTest {
         awards.add(new Award("Producer 2", 2002));
         when(producersRepository.getAwards()).thenReturn(awards);
 
-        AwardInterval actualInterval = producersController.awardInterval();
+        AwardInterval actualInterval = producersService.getAwardInterval();
 
         assertEquals(2, actualInterval.getMin().size());
         assertEquals(2, actualInterval.getMax().size());
@@ -71,7 +69,7 @@ public class ProducersControllerTest {
 
         when(producersRepository.getAwards()).thenReturn(awards);
 
-        AwardInterval actualInterval = producersController.awardInterval();
+        AwardInterval actualInterval = producersService.getAwardInterval();
 
         assertEquals(joelSilver, actualInterval.getMin().get(0));
         assertEquals(matthewVaughn, actualInterval.getMax().get(0));
@@ -83,7 +81,7 @@ public class ProducersControllerTest {
         awards.clear();
         when(producersRepository.getAwards()).thenReturn(awards);
 
-        AwardInterval actualInterval = producersController.awardInterval();
+        AwardInterval actualInterval = producersService.getAwardInterval();
 
         assertEquals(0, actualInterval.getMin().size());
         assertEquals(0, actualInterval.getMax().size());
@@ -98,7 +96,7 @@ public class ProducersControllerTest {
 
         when(producersRepository.getAwards()).thenReturn(awards);
 
-        AwardInterval actualInterval = producersController.awardInterval();
+        AwardInterval actualInterval = producersService.getAwardInterval();
 
         assertEquals(0, actualInterval.getMin().size());
         assertEquals(0, actualInterval.getMax().size());
