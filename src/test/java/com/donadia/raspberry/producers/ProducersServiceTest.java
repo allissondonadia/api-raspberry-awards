@@ -76,6 +76,34 @@ public class ProducersServiceTest {
     }
 
     @Test
+    public void testWhenReturnMoreThanOneMinAndMaxProducers() {
+        awards.add(new Award("Joel Silver", 1990));
+        awards.add(new Award("Joel Silver", 1991));
+
+        awards.add(new Award("Matthew Vaughn", 1980));
+        awards.add(new Award("Matthew Vaughn", 2002));
+        awards.add(new Award("Matthew Vaughn", 2003));
+        awards.add(new Award("Matthew Vaughn", 2037));
+        awards.add(new Award("Matthew Vaughn", 2015));
+
+        when(producersRepository.getAwards()).thenReturn(awards);
+
+        AwardInterval expected = new AwardInterval();
+        expected.getMin().add(new ProducerAward("Joel Silver", 1, 1990, 1991));
+        expected.getMin().add(new ProducerAward("Matthew Vaughn", 1, 2002, 2003));
+        expected.getMax().add(new ProducerAward("Matthew Vaughn", 22, 1980, 2002));
+        expected.getMax().add(new ProducerAward("Matthew Vaughn", 22, 2015, 2037));
+
+
+        AwardInterval actualInterval = producersService.getAwardInterval();
+
+        assertEquals(2, actualInterval.getMin().size());
+        assertEquals(2, actualInterval.getMax().size());
+
+        assertEquals(expected, actualInterval);
+    }
+
+    @Test
     public void testWhenAnyoneWinAnything() {
 
         awards.clear();
